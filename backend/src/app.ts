@@ -1,17 +1,15 @@
 import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
-import ActivityModel from "./models/activity";
+import morgan from "morgan";
+import activityRoutes from "./routes/activities";
 
 const app = express();
 
-app.get("/", async (req, res, next) => {
-  try {
-    const activity = await ActivityModel.find().exec();
-    res.status(200).json({ activity });
-  } catch (error) {
-    next(error);
-  }
-});
+app.use(morgan("dev"));
+
+app.use(express.json());
+
+app.use("/api/activities", activityRoutes);
 
 app.use((req, res, next) => {
   next(new Error("Not found"));
