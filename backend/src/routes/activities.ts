@@ -9,4 +9,8 @@ router.get("/:activityId", ActivitiesController.getActivity);
 
 router.post("/", ActivitiesController.createActivity);
 
+router.patch("/:activityId", ActivitiesController.updateActivity);
+
+router.delete("/:activityId", ActivitiesController.deleteActivity);
+
 export default router;
