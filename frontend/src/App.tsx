@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { Activity } from "./models/activity";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [activities, setActivities] = useState<Activity[]>([]);
+
+  useEffect(() => {
+    const localhost = async () => {
+      try {
+        const response = await fetch("/api/activities", {
+          method: "GET",
+        });
+        const activities = await response.json();
+        setActivities(activities);
+      } catch (error) {
+        console.error(error);
+        alert(error);
+      }
+    };
+    localhost();
+  }, []);
+
+  return <div className="App">{JSON.stringify(activities)}</div>;
 }
 
 export default App;
