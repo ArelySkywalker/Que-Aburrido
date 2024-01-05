@@ -6,7 +6,7 @@ import ActivityModel from "../models/activity";
 export const getActivities: RequestHandler = async (req, res, next) => {
   try {
     const activity = await ActivityModel.find().exec();
-    res.status(200).json({ activity });
+    res.status(200).json(activity);
   } catch (error) {
     next(error);
   }
@@ -25,7 +25,7 @@ export const getActivity: RequestHandler = async (req, res, next) => {
       throw createHttpError(404, "Activity not found.");
     }
 
-    res.status(200).json({ activity });
+    res.status(200).json(activity);
   } catch (error) {
     next(error);
   }
@@ -53,7 +53,7 @@ export const createActivity: RequestHandler<
       activityType,
       participants,
     });
-    res.status(201).json({ activity: newActivity });
+    res.status(201).json(newActivity);
   } catch (error) {
     next(error);
   }
@@ -99,7 +99,7 @@ export const updateActivity: RequestHandler<
       : activity.participants;
     const updatedActivity = await activity.save();
 
-    res.status(200).json({ activity: updatedActivity });
+    res.status(200).json(updatedActivity);
   } catch (error) {
     next(error);
   }

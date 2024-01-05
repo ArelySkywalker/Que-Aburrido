@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Activity } from "./models/activity";
-import logo from "./logo.svg";
-import "./App.css";
+import { Activity as ActivityModel } from "./models/activity";
+import Activity from "./components/Activity";
 
 function App() {
-  const [activities, setActivities] = useState<Activity[]>([]);
+  const [activities, setActivities] = useState<ActivityModel[]>([]);
 
   useEffect(() => {
     const localhost = async () => {
@@ -22,7 +21,13 @@ function App() {
     localhost();
   }, []);
 
-  return <div className="App">{JSON.stringify(activities)}</div>;
+  return (
+    <div>
+      {activities.map((activity) => {
+        return <Activity activity={activity} key={activity._id} />;
+      })}
+    </div>
+  );
 }
 
 export default App;

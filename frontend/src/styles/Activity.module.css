@@ -1,0 +1,8 @@
+.activityCard {
+  background-color: lightgray;
+  margin: 50px;
+}
+
+.cardText {
+  white-space: pre-line;
+}
