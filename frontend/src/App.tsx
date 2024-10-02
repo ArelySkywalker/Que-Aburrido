@@ -23,6 +23,7 @@ function App() {
 
   return (
     <div>
+      <h1>Activities</h1>
       {activities.map((activity) => {
         return <Activity activity={activity} key={activity._id} />;
       })}
