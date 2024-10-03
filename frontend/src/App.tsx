@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Activity as ActivityModel } from "./models/activity";
 import Activity from "./components/Activity";
+import { Container, Grid } from "@mui/material";
 
 function App() {
   const [activities, setActivities] = useState<ActivityModel[]>([]);
@@ -22,11 +23,14 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <Container>
+      <Grid container spacing={2}>
       {activities.map((activity) => {
-        return <Activity activity={activity} key={activity._id} />;
+        return (
+        <Grid item  xs={12} sm={12} md={6}  key={activity._id}><Activity activity={activity} /></Grid>);
       })}
-    </div>
+      </Grid>
+    </Container>
   );
 }
 
