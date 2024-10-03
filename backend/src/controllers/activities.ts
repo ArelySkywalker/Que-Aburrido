@@ -66,6 +66,7 @@ interface UpdateActivityParams {
 interface UpdateActivityBody {
   activityType?: string;
   participants?: number;
+  cost?: number;
 }
 
 export const updateActivity: RequestHandler<
@@ -77,6 +78,7 @@ export const updateActivity: RequestHandler<
   const activityId = req.params.activityId;
   const newActivityType = req.body.activityType;
   const newParticipants = req.body.participants;
+  const newCost = req.body.cost;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(activityId)) {
@@ -97,6 +99,7 @@ export const updateActivity: RequestHandler<
     activity.participants = newParticipants
       ? newParticipants
       : activity.participants;
+    activity.cost = newCost ? newCost : activity.cost;
     const updatedActivity = await activity.save();
 
     res.status(200).json(updatedActivity);

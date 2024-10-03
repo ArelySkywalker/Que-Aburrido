@@ -25,10 +25,13 @@ function App() {
   return (
     <Container>
       <Grid container spacing={2}>
-      {activities.map((activity) => {
-        return (
-        <Grid item  xs={12} sm={12} md={6}  key={activity._id}><Activity activity={activity} /></Grid>);
-      })}
+        {activities.map((activity) => {
+          return (
+            <Grid item xs={12} sm={12} md={6} key={activity._id}>
+              <Activity activity={activity} />
+            </Grid>
+          );
+        })}
       </Grid>
     </Container>
   );

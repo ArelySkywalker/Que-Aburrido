@@ -4,6 +4,7 @@ const nodeSchema = new Schema(
   {
     activityType: { type: String, required: true },
     participants: { type: Number },
+    cost: { type: Number },
   },
   { timestamps: true }
 );
