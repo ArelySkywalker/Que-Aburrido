@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Activity } from "../models/activity";
 import { ActivityInput } from "../network/types";
 import * as ActivitiesAPI from "../network/activities_api";
-import { Activity } from "../models/activity";
 
-interface AddActivityDialogProps {
+interface AddEditActivityDialogProps {
+  activityToEdit?: Activity | null;
   onActivitySaved: (activity: Activity) => void;
 }
 
-const AddActivityDialog = ({ onActivitySaved }: AddActivityDialogProps) => {
+const AddEditActivityDialog = ({
+  activityToEdit,
+  onActivitySaved,
+}: AddEditActivityDialogProps) => {
   const [activity, setActivity] = useState<ActivityInput>({
     activityType: "",
     participants: 0,
   });
+
+  useEffect(() => {
+    setActivity({
+      activityType: activityToEdit?.activityType || "",
+      participants: activityToEdit?.participants || 0,
+    });
+  }, [activityToEdit]);
 
   const [errors, setErrors] = useState<{
     activityType?: string;
@@ -54,11 +65,21 @@ const AddActivityDialog = ({ onActivitySaved }: AddActivityDialogProps) => {
     // Validate form before submission
     if (validateForm()) {
       try {
-        const activityResponse = await ActivitiesAPI.createActivity(activity);
+        let activityResponse: Activity;
+        if (activityToEdit) {
+          activityResponse = await ActivitiesAPI.updateActivity(
+            activityToEdit._id,
+            activity
+          );
+        } else {
+          activityResponse = await ActivitiesAPI.createActivity(activity);
+        }
+        // Notify the parent component that the activity was saved
         onActivitySaved(activityResponse);
+        setActivity({ activityType: "", participants: 0 });
         // Close the modal after successful submission
         const modal = document.getElementById(
-          "my_modal_1"
+          activityToEdit ? "edit_modal" : "add_modal"
         ) as HTMLDialogElement;
         if (modal) modal.close();
       } catch (error) {
@@ -70,12 +91,17 @@ const AddActivityDialog = ({ onActivitySaved }: AddActivityDialogProps) => {
 
   return (
     <>
-      <dialog id="my_modal_1" className="modal">
+      <dialog
+        id={activityToEdit ? "edit_modal" : "add_modal"}
+        className="modal"
+      >
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add New Activity</h3>
+          <h3 className="font-bold text-lg">
+            {activityToEdit ? "Edit" : "Add New"} Activity
+          </h3>
           <p className="py-4">Please fill in the details below:</p>
 
-          {/* Form for adding a new activity */}
+          {/* Form for adding or updating an activity */}
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Activity Type Input */}
             <div className="form-control">
@@ -127,14 +153,15 @@ const AddActivityDialog = ({ onActivitySaved }: AddActivityDialogProps) => {
             {/* Submit Button */}
             <div className="modal-action">
               <button type="submit" className="btn btn-primary">
-                Add Activity
+                {activityToEdit ? "Update" : "Add"} Activity
               </button>
               <button
                 type="button"
                 className="btn"
                 onClick={() => {
+                  setActivity({ activityType: "", participants: 0 });
                   const modal = document.getElementById(
-                    "my_modal_1"
+                    activityToEdit ? "edit_modal" : "add_modal"
                   ) as HTMLDialogElement;
                   if (modal) modal.close();
                 }}
@@ -149,4 +176,4 @@ const AddActivityDialog = ({ onActivitySaved }: AddActivityDialogProps) => {
   );
 };
 
-export default AddActivityDialog;
+export default AddEditActivityDialog;

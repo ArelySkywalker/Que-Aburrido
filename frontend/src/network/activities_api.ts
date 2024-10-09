@@ -30,7 +30,11 @@ export async function fetchActivities(): Promise<Activity[]> {
   });
   return response.json();
 }
-
+/**
+ * Creates an activity on the server
+ * @param activity The activity to create
+ * @returns The created activity
+ */
 export async function createActivity(
   activity: ActivityInput
 ): Promise<Activity> {
@@ -42,4 +46,34 @@ export async function createActivity(
     body: JSON.stringify(activity),
   });
   return response.json();
+}
+
+/**
+ * Updates an activity on the server
+ * @param activityId The ID of the activity to update
+ * @param activity The updated activity data
+ * @returns The updated activity
+ */
+export async function updateActivity(
+  activityId: string,
+  activity: ActivityInput
+): Promise<Activity> {
+  const response = await fetchData(`/api/activities/${activityId}`, {
+    method: API_METHODS.PATCH,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(activity),
+  });
+  return response.json();
+}
+
+/**
+ * Deletes an activity from the server
+ * @param activityId The ID of the activity to delete
+ */
+export async function deleteActivity(activityId: string): Promise<void> {
+  await fetchData(`/api/activities/${activityId}`, {
+    method: API_METHODS.DELETE,
+  });
 }
