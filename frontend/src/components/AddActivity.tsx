@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { ActivityInput } from "../network/types";
 import * as ActivitiesAPI from "../network/activities_api";
+import { Activity } from "../models/activity";
 
-const AddActivityDialog = () => {
+interface AddActivityDialogProps {
+  onActivitySaved: (activity: Activity) => void;
+}
+
+const AddActivityDialog = ({ onActivitySaved }: AddActivityDialogProps) => {
   const [activity, setActivity] = useState<ActivityInput>({
     activityType: "",
     participants: 0,
@@ -50,7 +55,7 @@ const AddActivityDialog = () => {
     if (validateForm()) {
       try {
         const activityResponse = await ActivitiesAPI.createActivity(activity);
-        console.log("Activity created:", activityResponse);
+        onActivitySaved(activityResponse);
         // Close the modal after successful submission
         const modal = document.getElementById(
           "my_modal_1"

@@ -6,7 +6,6 @@ import AddActivityDialog from "./components/AddActivity";
 
 function App() {
   const [activities, setActivities] = useState<ActivityModel[]>([]);
-  // const [showAddActivityDialog, setShowAddActivityDialog] = useState(false);
 
   useEffect(() => {
     const loadActivities = async () => {
@@ -22,22 +21,22 @@ function App() {
   }, []);
 
   return (
-    <div className=" ">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="container mx-auto p-6">
+      {/* Grid Layout for Activities */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {activities.map((activity) => {
           return (
-            <div
-              key={activity._id}
-              className="card grid h-20 flex-grow place-items-center"
-            >
+            <div key={activity._id} className="card p-4 rounded-lg bg-white">
               <Activity activity={activity} />
             </div>
           );
         })}
       </div>
-      <div className="container ">
+
+      {/* Add Activity Button */}
+      <div className="flex justify-center mt-6">
         <button
-          className="btn"
+          className="btn btn-primary"
           // @ts-ignore
           onClick={() => {
             const modal = document.getElementById(
@@ -48,7 +47,11 @@ function App() {
         >
           Add Activity
         </button>
-        <AddActivityDialog />
+        <AddActivityDialog
+          onActivitySaved={(newActivity) =>
+            setActivities([...activities, newActivity])
+          }
+        />
       </div>
     </div>
   );
