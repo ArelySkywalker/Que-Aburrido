@@ -76,19 +76,18 @@ function App() {
 
   const ActivitiesList = () => {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid gap-6 justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {activities.map((activity) => {
           return (
-            <div key={activity._id} className="card p-4 rounded-lg bg-white">
-              <Activity
-                activity={activity}
-                onActivitySelected={async (activity) => {
-                  await handleCloseModal(); // Reset state before showing modal again
-                  await setActivityToEdit(activity);
-                }}
-                onDeleteActivity={() => deleteActivity(activity)}
-              />
-            </div>
+            <Activity
+              key={activity._id}
+              activity={activity}
+              onActivitySelected={async (activity) => {
+                await handleCloseModal(); // Reset state before showing modal again
+                await setActivityToEdit(activity);
+              }}
+              onDeleteActivity={() => deleteActivity(activity)}
+            />
           );
         })}
       </div>
@@ -96,7 +95,7 @@ function App() {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-10">
       {activities.length > 0 ? (
         <ActivitiesList />
       ) : (

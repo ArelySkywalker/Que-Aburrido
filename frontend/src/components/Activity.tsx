@@ -16,7 +16,7 @@ const Activity = ({
   const { activityType, participants } = activity;
 
   return (
-    <div className="card bg-base-100 w-96 shadow-xl">
+    <div className="card bg-slate-50 w-96 shadow-xl">
       <div className="card-body">
         <h2 className="card-title">{activityType}</h2>
         <p>{`Participants: ${participants}`}</p>

@@ -95,7 +95,7 @@ const AddEditActivityDialog = ({
         id={activityToEdit ? "edit_modal" : "add_modal"}
         className="modal"
       >
-        <div className="modal-box">
+        <div className="modal-box bg-slate-200">
           <h3 className="font-bold text-lg">
             {activityToEdit ? "Edit" : "Add New"} Activity
           </h3>
@@ -114,7 +114,7 @@ const AddEditActivityDialog = ({
                 value={activity.activityType}
                 onChange={handleInputChange}
                 placeholder="Enter activity type"
-                className={`input input-bordered ${
+                className={`input input-bordered bg-slate-50 ${
                   errors.activityType ? "input-error" : ""
                 }`}
                 required
@@ -137,7 +137,7 @@ const AddEditActivityDialog = ({
                 value={activity.participants}
                 onChange={handleInputChange}
                 placeholder="Number of participants"
-                className={`input input-bordered ${
+                className={`input input-bordered bg-slate-50 ${
                   errors.participants ? "input-error" : ""
                 }`}
                 min="1"
