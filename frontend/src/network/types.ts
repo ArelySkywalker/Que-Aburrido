@@ -10,3 +10,7 @@ export interface ActivityInput {
   activityType: string;
   participants: number;
 }
+
+export interface ApiError {
+  message: string;
+}
