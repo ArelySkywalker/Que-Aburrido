@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Activity from "./components/Activity";
-import { Activity as ActivityModel } from "./models/activity";
-import * as ActivitiesAPI from "./network/activities_api";
+import Alert from "./components/common/Alert";
 import AddEditActivityDialog from "./components/AddEditActivity";
 import Loading from "./components/Loading";
+import { Activity as ActivityModel } from "./models/activity";
+import * as ActivitiesAPI from "./network/activities_api";
 import { ApiError } from "./network/types";
 
 function App() {
@@ -101,44 +102,17 @@ function App() {
       ) : (
         <div className="text-center">
           {activitiesLoadingError !== undefined ? (
-            <div role="alert" className="alert alert-error">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 shrink-0 stroke-current"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <div>
-                <h3 className="font-bold">
-                  Something went wrong when trying to load activities.
-                </h3>
-                <div className="text-xs">{activitiesLoadingError}</div>
-              </div>
-            </div>
+            <Alert
+              type="error"
+              title="Something went wrong when trying to load activities."
+              message={activitiesLoadingError}
+            />
           ) : (
-            <div role="alert" className="alert alert-warning">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 shrink-0 stroke-current"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                />
-              </svg>
-              <span>No activities found.</span>
-            </div>
+            <Alert
+              type="info"
+              title="No activities found."
+              message="Please add an activity to get started."
+            />
           )}
         </div>
       )}
