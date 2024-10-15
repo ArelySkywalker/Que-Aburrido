@@ -52,6 +52,15 @@
     ]
   },
   "devDependencies": {
-    "jsdom": "^25.0.1"
+    "@storybook/addon-a11y": "^8.3.5",
+    "@storybook/addon-docs": "^8.3.5",
+    "@storybook/addon-essentials": "^8.3.5",
+    "@storybook/addon-interactions": "^8.3.5",
+    "@storybook/addon-jest": "^8.3.5",
+    "@storybook/addon-knobs": "^8.0.1",
+    "@storybook/addon-links": "^8.3.5",
+    "@storybook/addon-storysource": "^8.3.5",
+    "jsdom": "^25.0.1",
+    "storybook": "^8.3.5"
   }
 }
