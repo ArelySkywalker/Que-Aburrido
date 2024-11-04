@@ -1,4 +1,5 @@
 import { Activity } from "../models/activity";
+import { User } from "../models/user";
 import { ActivityInput, API_METHODS } from "./types";
 
 /**
@@ -18,6 +19,69 @@ async function fetchData(
     throw new Error(errorMessage);
   }
   return response;
+}
+
+/**
+ * Fetches the currently logged in user from the server
+ * @returns The logged in user
+ */
+export async function getLoggedInUser(): Promise<User> {
+  const response = await fetchData("/api/users", {
+    method: API_METHODS.GET,
+  });
+  return response.json();
+}
+
+export interface SignUpCredentials {
+  username: string;
+  email: string;
+  password: string;
+}
+
+/**
+ * Logs in a user with the given credentials
+ * @param credentials The credentials to log in with
+ * @returns The logged in user
+ */
+export async function signUp(credentials: SignUpCredentials): Promise<User> {
+  const response = await fetchData("/api/users/signup", {
+    method: API_METHODS.POST,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
+  return response.json();
+}
+
+export interface LoginCredentials {
+  username: string;
+  password: string;
+}
+
+/**
+ * Logs in a user with the given credentials
+ * @param credentials The credentials to log in with
+ * @returns The logged in user
+ */
+export async function login(credentials: LoginCredentials): Promise<User> {
+  const response = await fetchData("/api/users/login", {
+    method: API_METHODS.POST,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
+  return response.json();
+}
+
+/**
+ * Logs out the currently logged in user
+ */
+export async function logout(): Promise<void> {
+  await fetchData("/api/users/logout", {
+    method: API_METHODS.POST,
+  });
 }
 
 /**
